@@ -29,7 +29,7 @@ android {
             versionNameSuffix = "-debug"
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -90,4 +90,6 @@ dependencies {
     implementation("androidx.camera:camera-extensions:$cameraxVersion")
 
     implementation("androidx.compose.material:material-icons-extended:1.6.4")
+
+    implementation("com.airbnb.android:lottie-compose:6.4.0")
 }

@@ -11,25 +11,24 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(206, 36, 36, 255),
-    secondary = Color(64, 102, 216, 255),
+    primary = Color(64, 102, 216, 255),
     tertiary = Pink80,
     background = Color(38, 50, 56),
-    surface = Color(32, 43, 48, 255)
+    surface = Color.Black,
+    onBackground = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(206, 36, 36, 255),
-    secondary = Color(64, 102, 216, 255),
+    primary = Color(64, 102, 216, 255),
     tertiary = Pink40,
     background = Color(230, 230, 230, 255),
-    surface = Color.White
+    surface = Color.White,
+    onBackground = Color.Black
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -62,8 +61,9 @@ fun UnSpokenTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = Color.Transparent.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+//            window.statusBarColor = Color(0, 0, 0, 72).toArgb()
+//            window.navigationBarColor = Color.Transparent.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
 
