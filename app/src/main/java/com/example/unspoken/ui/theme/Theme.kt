@@ -11,21 +11,22 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(64, 102, 216, 255),
-    tertiary = Pink80,
-    background = Color(38, 50, 56),
+    tertiary = Color(39, 52, 60, 255),
+    background = Color(23, 30, 34, 255),
     surface = Color.Black,
     onBackground = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(64, 102, 216, 255),
-    tertiary = Pink40,
+    tertiary = Color(204, 204, 204, 255),
     background = Color(230, 230, 230, 255),
     surface = Color.White,
     onBackground = Color.Black
@@ -62,7 +63,7 @@ fun UnSpokenTheme(
         SideEffect {
             val window = (view.context as Activity).window
 //            window.statusBarColor = Color(0, 0, 0, 72).toArgb()
-//            window.navigationBarColor = Color.Transparent.toArgb()
+            window.navigationBarColor = colorScheme.background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }

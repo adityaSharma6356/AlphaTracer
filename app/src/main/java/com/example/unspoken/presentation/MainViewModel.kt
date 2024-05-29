@@ -1,39 +1,38 @@
 package com.example.unspoken.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.unspoken.data.repository.Feed
-import com.example.unspoken.data.repository.MainRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: MainRepository
+    auth: FirebaseAuth
 ) : ViewModel() {
-
-    private val _uiState = MutableStateFlow(FeedUiState())
-    val uiState = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            repository.getMainFeeds().let { feeds ->
-                _uiState.update {
-                    it.copy(
-                        mainFeed = feeds
-                    )
-                }
-                Log.d("llll", uiState.value.mainFeed.toString())
-            }
-        }
-    }
+    val isLoggedIn = auth.authStateFlow().stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        auth.currentUser != null
+    )
 }
 
-data class FeedUiState(
-    val mainFeed: List<Feed> = mutableListOf()
-)
+inline val FirebaseAuth?.currentUserId: String?
+    get() = this?.currentUser?.uid
+
+fun FirebaseAuth.authStateFlow(): Flow<Boolean> = callbackFlow {
+    val authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+        trySend(firebaseAuth.currentUser != null)
+    }
+
+    addAuthStateListener(authStateListener)
+
+    awaitClose {
+        removeAuthStateListener(authStateListener)
+    }
+}

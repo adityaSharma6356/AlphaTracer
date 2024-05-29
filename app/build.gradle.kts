@@ -9,7 +9,6 @@ plugins {
 android {
     namespace = "com.example.unspoken"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.example.unspoken"
         minSdk = 26
@@ -22,7 +21,6 @@ android {
             useSupportLibrary = true
         }
     }
-
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -68,6 +66,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -79,17 +78,12 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    val cameraxVersion = "1.3.0-rc01"
+    implementation(libs.androidx.material.icons.extended.v164)
 
-    implementation("androidx.camera:camera-core:$cameraxVersion")
-    implementation("androidx.camera:camera-camera2:$cameraxVersion")
-    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
-    implementation("androidx.camera:camera-video:$cameraxVersion")
+    implementation(libs.lottie.compose)
 
-    implementation("androidx.camera:camera-view:$cameraxVersion")
-    implementation("androidx.camera:camera-extensions:$cameraxVersion")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
-    implementation("androidx.compose.material:material-icons-extended:1.6.4")
-
-    implementation("com.airbnb.android:lottie-compose:6.4.0")
+    implementation(libs.androidx.core.splashscreen)
 }
